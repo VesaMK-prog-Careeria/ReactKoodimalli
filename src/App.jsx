@@ -2,6 +2,7 @@ import './App.css'
 import Laskuri from './Laskuri'
 import Posts from './Posts'
 import Posts2 from './Posts2'
+import CustomerList from './CustomerList'
 import Viesti from './Viesti'
 import React, {useState} from 'react'
 
@@ -35,6 +36,9 @@ const huomio = () => {
         {showPosts2 && <button onClick={() => setShowPosts2(false)}>Piilota postaukset 2</button>} {/* jos showPosts on true niin renderöidään button */}
         {showPosts2 && <Posts2 />} {/* jos showPosts on true niin renderöidään Posts2 komponentti */}
         {!showPosts2 && <button onClick={() => setShowPosts2(true)}>Näytä postaukset 2</button>} {/* jos showPosts on false niin renderöidään button */}
+      </div>
+      <div>
+        <CustomerList />
       </div>
     </>
   )
