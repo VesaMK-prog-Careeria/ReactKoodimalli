@@ -1,9 +1,10 @@
 import './App.css'
 import React, {useState} from 'react'
 
-
-const Laskuri = (props) => {
-// Komponentin tilan määritys
+// Laskuri komponentti joka käyttää tilaa
+//const Laskuri = (props) => { kun tiedetään että propsissa on vain yksi funktio niin propsin voi purkaa suoraan
+const Laskuri = ({huomio}) => {
+    // Komponentin tilan määritys
 const [luku, setLuku] = useState(0)
 
   return (
@@ -13,8 +14,8 @@ const [luku, setLuku] = useState(0)
         <button onClick={() => setLuku(luku - 1)}>-</button>
         <button onClick={() => setLuku(0)}>nollaa</button>
 
-        <button onClick={props.huomio}>Huomio</button>
-
+        {/* <button onClick={props.huomio}>Huomio</button> */}
+        <button onClick={huomio}>Huomio</button>
     </>
   )
 }

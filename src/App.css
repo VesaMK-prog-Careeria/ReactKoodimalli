@@ -40,3 +40,22 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Define a class for the onClick styles */
+.clicked {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1em;
+
+}
+
+/* div posts */
+.posts {
+  background-color: #363636; /* Example: change background color */
+  color: #ffffff; /* Example: change text color */
+  border-color: #67666600; /* Example: change border color */
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
