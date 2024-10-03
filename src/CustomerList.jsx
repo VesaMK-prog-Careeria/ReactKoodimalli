@@ -4,7 +4,7 @@ import CustomerService from './services/Customer'
 import Customer from './Customer'
 import CustomerAdd from './CustomerAdd'
 
-const CustomerList = () => {
+const CustomerList = ({setIsPositive, setShowMessage, setMessage}) => {
 
 // Komponentin tilan määritys
 const [customers, setCustomer] = useState([])
@@ -27,7 +27,9 @@ useEffect(() => { //tiedonhaku NW:n customers taulusta
               onClick={() => setShowCustomers(!showCustomers)}>Customers from NW</nobr>
               {!lisäystila && <button className='nappi' onClick={() => setLisäystila(true)}>Lisää asiakas</button>}
 
-              {lisäystila && <CustomerAdd setLisäystila={setLisäystila}/>}
+              {lisäystila && <CustomerAdd setLisäystila={setLisäystila}
+              setIsPositive={setIsPositive} setMessage={setMessage} setShowMessage={setShowMessage}
+              />}
         </h2>
         {
             showCustomers && customers && customers.map(c => ( //loopataan customers taulukko ja tulostetaan jokainen asiakas omalle rivilleen

@@ -2,7 +2,7 @@ import './App.css'
 import React, {useState} from 'react'
 import CustomerService from './services/Customer'
 
-const CustomerAdd = ({setLisäystila}) => {
+const CustomerAdd = ({setLisäystila, setIsPositive, setMessage, setShowMessage}) => {
 
 // Komponentin tilan määritys
 const [newCustomerId, setNewCustomerId] = useState('') //tämä kerää uuden asiakkaan tiedot joka painalluksella
@@ -38,12 +38,26 @@ const handleSubmit = (event) => {
     CustomerService.create(newCustomer) //kutsutaan CustomerService moduulin create metodia ja lähetetään uusi asiakasobjekti
     .then(response => { //jos vastaus on 200 niin alerttiin tulee asiakkaan lisäys onnistui
         if(response.status === 200) {
-            alert('Asiakkaan lisäys onnistui' + newCustomer.companyName)
+            //alert('Asiakkaan lisäys onnistui' + newCustomer.companyName)
+            setMessage('Asiakkaan lisäys onnistui ' + newCustomer.companyName) //tämä asettaa viestin
+            setShowMessage(true) //tämä näyttää viestin
+            setIsPositive(true) //tämä asettaa viestin positiiviseksi
+            
+            setTimeout(() => { //3000ms jälkeen tyhjennetään tilat
+                setShowMessage(false) //tämä piilottaa viestin
+            },3000)
+
             setLisäystila(false) //tämä sulkee lisäyslomakkeen
         }
     })
     .catch(error => { //jos tulee virhe niin alerttiin tulee asiakkaan lisäys ei onnistunut
-        alert('Asiakkaan lisäys ei onnistunut')
+        //alert('Asiakkaan lisäys ei onnistunut')
+        setMessage('Asiakkaan lisäys ei onnistunut') //tämä asettaa viestin
+        setShowMessage(true) //tämä näyttää viestin
+        setIsPositive(false) //tämä asettaa viestin negatiiviseksi
+        setTimeout(() => { //3000ms jälkeen tyhjennetään tilat
+            setShowMessage(false) //tämä piilottaa viestin
+        },3000)
     })
 
     // setTimeout(() => { //500ms jälkeen tyhjennetään tilat

@@ -5,6 +5,7 @@ import Posts2 from './Posts2'
 import CustomerList from './CustomerList'
 import Viesti from './Viesti'
 import React, {useState} from 'react'
+import Message from './Message'
 
 const App = () => {
 
@@ -12,6 +13,10 @@ const App = () => {
 const [showLaskuri, setShowLaskuri] = useState(false)
 const [showPosts, setShowPosts] = useState(false)
 const [showPosts2, setShowPosts2] = useState(false)
+// Message statet
+const [showMessage, setShowMessage] = useState(false)
+const [message, setMessage] = useState('')
+const [isPositive, setIsPositive] = useState(false)
 
 const huomio = () => {
   alert('Huomio!') // alertti joka tulostaa Huomio! kun sitä kutsutaan
@@ -21,6 +26,8 @@ const huomio = () => {
     <>
       <div className="App">
         <h1>Hello from react</h1>
+
+        {showMessage && <Message message={message} isPositive={isPositive} />} {/* Message komponentti */}
 
         {showPosts && <button onClick={() => setShowPosts(false)}>Piilota postaukset</button>} {/* jos showPosts on true niin renderöidään button */}
         {showPosts && <Posts />} {/* jos showPosts on true niin renderöidään Posts komponentti */}
@@ -38,7 +45,7 @@ const huomio = () => {
         {!showPosts2 && <button onClick={() => setShowPosts2(true)}>Näytä postaukset 2</button>} {/* jos showPosts on false niin renderöidään button */}
       </div>
       <div>
-        <CustomerList />
+        <CustomerList setIsPositive={setIsPositive} setMessage={setMessage} setShowMessage={setShowMessage} />
       </div>
     </>
   )
