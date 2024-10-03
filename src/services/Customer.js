@@ -13,4 +13,8 @@ const getAll = () => {
     return request.then(response => response.data)
 }
 
-export default { getAll }
+const create = newCustomer => { // Useampi parametri, jos tarvitaan (newCustomer, token)
+    return axios.post(baseUrl, newCustomer)
+}
+
+export default { getAll, create } // exportataan kaikki metodit
