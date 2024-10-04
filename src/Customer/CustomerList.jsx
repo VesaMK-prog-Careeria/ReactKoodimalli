@@ -1,6 +1,6 @@
-import './App.css'
+import '../App.css'
 import React, {useState, useEffect} from 'react'
-import CustomerService from './services/Customer'
+import CustomerService from '../services/Customer'
 import Customer from './Customer'
 import CustomerAdd from './CustomerAdd'
 
@@ -23,8 +23,9 @@ useEffect(() => { //tiedonhaku NW:n customers taulusta
   return (
     <>
         {/*<h2 onClick={() => setShowCustomers(!showCustomers)}>Customers from NW</h2>*/}
-        <h2><nobr style={{ cursor: 'pointer' }}
-              onClick={() => setShowCustomers(!showCustomers)}>Customers from NW</nobr>
+        <h2> 
+              <button onClick={() => setShowCustomers(!showCustomers)}>
+                {!showCustomers ? 'Näytä asiakkaat' : 'Piilota asiakkaat'}</button>
               {!lisäystila && <button className='nappi' onClick={() => setLisäystila(true)}>Lisää asiakas</button>}
 
               {lisäystila && <CustomerAdd setLisäystila={setLisäystila}

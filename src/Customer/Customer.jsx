@@ -1,9 +1,9 @@
-import './App.css'
+import '../App.css'
 import React, {useState} from 'react'
 
 // tässä käytetty propsia, joka on parametri, joka välitetään komponentille
-const Customer = ({customer}) => {
-
+const Customer = ({customer}) => { //tässä otettu propsista customer ja asetettu se muuttujaan
+                                    // eli ei tarvi käyttää props.customer.companyName vaan pelkkä customer.companyName
 // Komponentin tilan määritys
 const [showDetails, setShowDetails] = useState(false)
 

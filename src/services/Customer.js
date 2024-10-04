@@ -10,8 +10,8 @@ const getAll = () => {
     //     headers: { Authorization: token },
     // }
     const request = axios.get(baseUrl)
-    return request.then(response => response.data)
-}
+    return request.then(response => response.data) // tässä haetaan vain data osa vastauksesta(response)
+}                                                   // response sisältää myös status koodin ja muita tietoja
 
 const create = newCustomer => { // Useampi parametri, jos tarvitaan (newCustomer, token)
     return axios.post(baseUrl, newCustomer)
