@@ -25,8 +25,8 @@ const huomio = () => {
   return (
     <>
       <div className="App">
-        <h1>Hello from react</h1>
-
+        <h1>React kurssi</h1>
+        {/* kun lähetetään messagelle eli propsille viesti ja se on positiivinen niin se näytetään */}
         {showMessage && <Message message={message} isPositive={isPositive} />} {/* Message komponentti */}
 
         {showPosts && <button onClick={() => setShowPosts(false)}>Piilota postaukset</button>} {/* jos showPosts on true niin renderöidään button */}
@@ -37,6 +37,7 @@ const huomio = () => {
         {!showLaskuri && <button onClick={() => setShowLaskuri(true)}>Näytä laskuri</button>} {/* jos showLaskuri on false niin renderöidään button */}
         {showLaskuri && <button onClick={() => setShowLaskuri(false)}>Piilota laskuri</button>} {/* jos showLaskuri on true niin renderöidään button */}
         
+        {/*! viesti komponentti antaa propsin juuresta ylös */}
         <Viesti teksti="Tämä on viesti propsin kautta" />
       </div>
       <div>

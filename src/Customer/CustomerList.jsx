@@ -10,6 +10,7 @@ const CustomerList = ({setIsPositive, setShowMessage, setMessage}) => {
 const [customers, setCustomer] = useState([])
 const [showCustomers, setShowCustomers] = useState(false)
 const [lisäystila, setLisäystila] = useState(false)
+const [reload, setReload] = useState(false)
 
 
 useEffect(() => { //tiedonhaku NW:n customers taulusta
@@ -17,7 +18,7 @@ useEffect(() => { //tiedonhaku NW:n customers taulusta
     .then(data => {
         setCustomer(data)
     })
-},[lisäystila] //jos lisäystila muuttuu niin hakee uudet tiedot
+},[lisäystila, reload] //jos lisäystila muuttuu niin hakee uudet tiedot
 )
 
   return (
@@ -34,9 +35,11 @@ useEffect(() => { //tiedonhaku NW:n customers taulusta
         </h2>
         {
             showCustomers && customers && customers.map(c => ( //loopataan customers taulukko ja tulostetaan jokainen asiakas omalle rivilleen
-                <Customer key={c.customerId} customer={c} /> //Customer komponentti joka saa propsina customer olion
+                <Customer key={c.customerId} customer={c} 
+                setIsPositive={setIsPositive} setMessage={setMessage} setShowMessage={setShowMessage} setReload={setReload} reload={reload}
+                /> //Customer komponentti joka saa propsina customerin ja setIsPositive, setMessage ja setShowMessage funktiot
             )
-            )
+          )
         }
     </>
   )

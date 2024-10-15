@@ -17,4 +17,8 @@ const create = newCustomer => { // Useampi parametri, jos tarvitaan (newCustomer
     return axios.post(baseUrl, newCustomer)
 }
 
-export default { getAll, create } // exportataan kaikki metodit
+const remove = id => {
+    return axios.delete(`${baseUrl}/${id}`) //backticksit koska halutaan muuttaa id muuttuja stringiksi
+}
+
+export default { getAll, create, remove } // exportataan kaikki metodit

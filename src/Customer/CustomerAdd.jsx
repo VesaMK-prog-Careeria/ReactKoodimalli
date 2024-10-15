@@ -2,9 +2,26 @@ import '../App.css'
 import React, {useState} from 'react'
 import CustomerService from '../services/Customer'
 
+/** tässä tulee propsina setLisäystila jne. ja lähtee action alaspäin */
 const CustomerAdd = ({setLisäystila, setIsPositive, setMessage, setShowMessage}) => {
+/** Tässä komponentissa on lomake, jolla voi lisätä uuden asiakkaan tietokantaan
+ * const on komponentin tila
+ * set on tilan muuttamismetodi
+ * useState hookilla luodaan tila ja sen muuttamismetodi
+ * tila on muuttuja, joka voi muuttua komponentin suorituksen aikana
+ * tila voi olla esim. numero, merkkijono, taulukko tai objekti
+ * useState hookilla voi luoda useita tiloja
+ * tila voi olla myös boolean, joka kertoo onko lomake näkyvissä
+ * tila voi olla myös viesti, joka näytetään käyttäjälle
+ * tila voi olla myös taulukko, joka sisältää asiakkaat
+ * tila voi olla myös objekti, joka sisältää yhden asiakkaan tiedot
+ * tila voi olla myös taulukko, joka sisältää asiakkaan tilaukset
+ * tila voi olla myös boolean, joka kertoo onko tilaukset näkyvissä
+ * tila voi olla myös boolean, joka kertoo onko tilausten lisäys näkyvissä
+ * tila voi olla myös boolean, joka kertoo onko tilausten muokkaus näkyvissä
+ * tila voi olla myös boolean, joka kertoo onko tilausten poisto näkyvissä
+ */
 
-// Komponentin tilan määritys
 const [newCustomerId, setNewCustomerId] = useState('') //tämä kerää uuden asiakkaan tiedot joka painalluksella
 const [newCompanyName, setNewCompanyName] = useState('') //ja sitten kun painetaan submit nappia niin tiedot lähetetään tietokantaan
 const [newContactName, setNewContactName] = useState('') //ja tämä tyhjentää tilan
@@ -45,7 +62,7 @@ const handleSubmit = (event) => {
             
             setTimeout(() => { //3000ms jälkeen tyhjennetään tilat
                 setShowMessage(false) //tämä piilottaa viestin
-            },3000)
+            },6000)
 
             setLisäystila(false) //tämä sulkee lisäyslomakkeen
         }

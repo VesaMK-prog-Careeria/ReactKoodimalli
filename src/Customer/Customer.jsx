@@ -1,18 +1,47 @@
 import '../App.css'
 import React, {useState} from 'react'
+import CustomerService from '../services/Customer'
 
 // tässä käytetty propsia, joka on parametri, joka välitetään komponentille
-const Customer = ({customer}) => { //tässä otettu propsista customer ja asetettu se muuttujaan
+const Customer = ({customer, setIsPositive, setMessage, setShowMessage, reload, setReload}) => { //tässä otettu propsista customer ja asetettu se muuttujaan
                                     // eli ei tarvi käyttää props.customer.companyName vaan pelkkä customer.companyName
 // Komponentin tilan määritys
 const [showDetails, setShowDetails] = useState(false)
 
+const deleteCustomer = () => {
+    if(window.confirm('Are you sure you want to delete ' + customer.companyName + '?')) {
+
+    CustomerService.remove(customer.customerId)
+    .then(res => {
+        if(res.status === 200) {
+        window.scrollTo(0, 0)
+        setMessage('Customer ' + customer.companyName + ' deleted')
+        setIsPositive(true)
+        setShowMessage(true)
+
+        setTimeout(() => {
+            setShowMessage(false)
+            //window.location.reload() //ei suositella lataa koko sivun uudelleen
+            setReload(!reload) //tämä lataa vain asiakkaat uudelleen (tehty CustomerList komponenttiin)
+        }, 6000)
+    }
+    })
+    .catch(error => {
+        window.scrollTo(0, 0)
+        setMessage('Customer ' + customer.companyName + ' was not deleted')
+        setIsPositive(false)
+        setShowMessage(true)
+
+        setTimeout(() => {
+            setShowMessage(false)
+        },6000)
+    })
+    }
+}
+
 return (
     <div className='customerDiv'>
-        
-       <h4 onMouseEnter={() => setShowDetails(true)} //hiiren tullessa elementin päälle, showDetails tila muuttuu trueksi
-       onMouseLeave={() => setShowDetails(false)}
-       >
+       <h4 onClick={() => setShowDetails(!showDetails)}>
            {customer.companyName}
         </h4>
 
@@ -37,9 +66,14 @@ return (
                             <td>{customer.country}</td>
                         </tr>
                     </tbody>
-                </table></div>}
+                </table>
+                <div colSpan="5" style={{ textAlign: 'center' }}>
+                    <button onClick={() => deleteCustomer(customer)}>Delete</button>
+                    <button>Edit</button>
+                </div>
+            </div>}
     </div>
-    )
+)
 }
 
 export default Customer
