@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import CustomerService from '../services/Customer'
 
 // tässä käytetty propsia, joka on parametri, joka välitetään komponentille
-const Customer = ({customer, setIsPositive, setMessage, setShowMessage, reload, setReload}) => { //tässä otettu propsista customer ja asetettu se muuttujaan
+const Customer = ({customer, editCustomer, setIsPositive, setMessage, setShowMessage, reload, setReload}) => { //tässä otettu propsista customer ja asetettu se muuttujaan
                                     // eli ei tarvi käyttää props.customer.companyName vaan pelkkä customer.companyName
 // Komponentin tilan määritys
 const [showDetails, setShowDetails] = useState(false)
@@ -69,7 +69,7 @@ return (
                 </table>
                 <div colSpan="5" style={{ textAlign: 'center' }}>
                     <button onClick={() => deleteCustomer(customer)}>Delete</button>
-                    <button>Edit</button>
+                    <button onClick={() => editCustomer(customer)}>Edit</button>
                 </div>
             </div>}
     </div>

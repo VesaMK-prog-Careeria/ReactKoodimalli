@@ -21,4 +21,8 @@ const remove = id => {
     return axios.delete(`${baseUrl}/${id}`) //backticksit koska halutaan muuttaa id muuttuja stringiksi
 }
 
-export default { getAll, create, remove } // exportataan kaikki metodit
+const update = (object) => {
+    return axios.put(`${baseUrl}/${object.customerId}`, object)
+}
+
+export default { getAll, create, remove, update } // exportataan kaikki metodit

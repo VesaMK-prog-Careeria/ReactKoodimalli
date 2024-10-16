@@ -2,45 +2,28 @@ import '../App.css'
 import React, {useState} from 'react'
 import CustomerService from '../services/Customer'
 
-/** tässä tulee propsina setLisäystila jne. ja lähtee action alaspäin */
-const CustomerAdd = ({setLisäystila, setIsPositive, setMessage, setShowMessage, reload, setReload}) => {
-/** Tässä komponentissa on lomake, jolla voi lisätä uuden asiakkaan tietokantaan
- * const on komponentin tila
- * set on tilan muuttamismetodi
- * useState hookilla luodaan tila ja sen muuttamismetodi
- * tila on muuttuja, joka voi muuttua komponentin suorituksen aikana
- * tila voi olla esim. numero, merkkijono, taulukko tai objekti
- * useState hookilla voi luoda useita tiloja
- * tila voi olla myös boolean, joka kertoo onko lomake näkyvissä
- * tila voi olla myös viesti, joka näytetään käyttäjälle
- * tila voi olla myös taulukko, joka sisältää asiakkaat
- * tila voi olla myös objekti, joka sisältää yhden asiakkaan tiedot
- * tila voi olla myös taulukko, joka sisältää asiakkaan tilaukset
- * tila voi olla myös boolean, joka kertoo onko tilaukset näkyvissä
- * tila voi olla myös boolean, joka kertoo onko tilausten lisäys näkyvissä
- * tila voi olla myös boolean, joka kertoo onko tilausten muokkaus näkyvissä
- * tila voi olla myös boolean, joka kertoo onko tilausten poisto näkyvissä
- */
+/** tässä tulee propsina setMuokkaustila jne. ja lähtee action alaspäin */
+const CustomerEdit = ({setMuokkaustila, setIsPositive, setMessage, setShowMessage, muokattavaCustomer, reload, setReload}) => {
+/** Tässä muokataan tietty customer */
+const [newCustomerId, setNewCustomerId] = useState(muokattavaCustomer.customerId) //tämä kerää uuden asiakkaan tiedot joka painalluksella
+const [newCompanyName, setNewCompanyName] = useState(muokattavaCustomer.companyName) //ja sitten kun painetaan submit nappia niin tiedot lähetetään tietokantaan
+const [newContactName, setNewContactName] = useState(muokattavaCustomer.contactName) //ja tämä tyhjentää tilan
+const [newContactTitle, setNewContactTitle] = useState(muokattavaCustomer.contactTitle)
 
-const [newCustomerId, setNewCustomerId] = useState('') //tämä kerää uuden asiakkaan tiedot joka painalluksella
-const [newCompanyName, setNewCompanyName] = useState('') //ja sitten kun painetaan submit nappia niin tiedot lähetetään tietokantaan
-const [newContactName, setNewContactName] = useState('') //ja tämä tyhjentää tilan
-const [newContactTitle, setNewContactTitle] = useState('')
+const [newCountry, setNewCountry] = useState(muokattavaCustomer.country)
+const [newAddress, setNewAddress] = useState(muokattavaCustomer.address)
+const [newCity, setNewCity] = useState(muokattavaCustomer.city)
+const [newRegion, setNewRegion] = useState(muokattavaCustomer.region)
 
-const [newCountry, setNewCountry] = useState('')
-const [newAddress, setNewAddress] = useState('')
-const [newCity, setNewCity] = useState('')
-const [newRegion, setNewRegion] = useState('')
-
-const [newPostalCode, setNewPostalCode] = useState('')
-const [newPhone, setNewPhone] = useState('')
-const [newFax, setNewFax] = useState('')
+const [newPostalCode, setNewPostalCode] = useState(muokattavaCustomer.postalCode)
+const [newPhone, setNewPhone] = useState(muokattavaCustomer.phone)
+const [newFax, setNewFax] = useState(muokattavaCustomer.fax)
 
 //onSubmit tapahtumankäsittelijä funktio
 const handleSubmit = (event) => {
     event.preventDefault() //estetään lomakkeen lähettäminen
-    var newCustomer = { //uusi asiakasobjekti
-        customerId: newCustomerId, // pitää olla samat nimet kuin tietokannassa
+    var newCustomer = { //uusi asiakasobjekti, pitää olla samat nimet kuin tietokannassa
+        customerId: newCustomerId,
         companyName: newCompanyName,
         contactName: newContactName,
         contactTitle: newContactTitle,
@@ -52,26 +35,26 @@ const handleSubmit = (event) => {
         phone: newPhone,
         fax: newFax
     }
-    CustomerService.create(newCustomer) //kutsutaan CustomerService moduulin create metodia ja lähetetään uusi asiakasobjekti
+    CustomerService.update(newCustomer) //kutsutaan CustomerService moduulin create metodia ja lähetetään uusi asiakasobjekti
     .then(response => { //jos vastaus on 200 niin alerttiin tulee asiakkaan lisäys onnistui
         if(response.status === 200) {
             window.scrollTo(0, 0)
-            setMessage('Asiakkaan lisäys onnistui ' + newCustomer.companyName) //tämä asettaa viestin
+            setMessage('Asiakkaan ' + newCustomer.companyName +' muokkaus onnistui')  //tämä asettaa viestin
             setShowMessage(true) //tämä näyttää viestin
             setIsPositive(true) //tämä asettaa viestin positiiviseksi
             
             setTimeout(() => { //3000ms jälkeen tyhjennetään tilat
                 setShowMessage(false) //tämä piilottaa viestin
                 setReload(!reload) //tämä lataa vain asiakkaat uudelleen (tehty CustomerList komponenttiin)
-            },6000)
+        },6000)
 
-            setLisäystila(false) //tämä sulkee lisäyslomakkeen
+            setMuokkaustila(false) //tämä sulkee lisäyslomakkeen
         }
     })
     .catch(error => { //jos tulee virhe niin alerttiin tulee asiakkaan lisäys ei onnistunut
         //alert('Asiakkaan lisäys ei onnistunut')
         window.scrollTo(0, 0)
-        setMessage('Asiakkaan lisäys ei onnistunut') //tämä asettaa viestin
+        setMessage('Asiakkaan muokkaus ei onnistunut') //tämä asettaa viestin
         setShowMessage(true) //tämä näyttää viestin
         setIsPositive(false) //tämä asettaa viestin negatiiviseksi
         setTimeout(() => { //3000ms jälkeen tyhjennetään tilat
@@ -87,11 +70,10 @@ const handleSubmit = (event) => {
 
 return (
     <div id='addNew'>
-            <h2>Asiakkaan lisäys</h2>
+            <h2>Asiakkaan muokkaus</h2>
             <form onSubmit={handleSubmit}>
                     <div>
-                            <input type='text' value={newCustomerId} onChange={({target}) => setNewCustomerId(target.value)} 
-                            placeholder='ID with 5 capital letters' maxLength='5' minLength='5'/>
+                            <input type='text' value={newCustomerId} disabled />
                     </div>
                     <div>
                             <input type='text' value={newCompanyName} onChange={({target}) => setNewCompanyName(target.value)} 
@@ -134,12 +116,12 @@ return (
                             placeholder='Fax'/>
                     </div>
 
-                <input type='submit' value='Lisää'/>
-                <input type='button' value='Peruuta' onClick={() => setLisäystila(false)}/>
+                <input type='submit' value='Muokkaa'/>
+                <input type='button' value='Peruuta' onClick={() => setMuokkaustila(false)}/>
 
             </form>
     </div>
 )
 }
 
-export default CustomerAdd
+export default CustomerEdit
