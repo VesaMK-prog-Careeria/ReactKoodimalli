@@ -49,7 +49,7 @@ const editCustomer = (customer) => {
               muokattavaCustomer={muokattavaCustomer}
               />} */}
         </h2>
-        {showCustomers && customers && customers.map(c => ( // loopataan customers taulukko ja tulostetaan jokainen asiakas omalle rivilleen
+        {/* {!lisäystila && !muokkaustila && */showCustomers && customers && customers.map(c => ( // loopataan customers taulukko ja tulostetaan jokainen asiakas omalle rivilleen */}
           <div key={c.customerId}>
             <Customer 
               customer={c} 
