@@ -60,6 +60,16 @@
   margin-bottom: 10px;
 }
 
+.customerDiv {
+  background-color: #363636; /* Example: change background color */
+  color: #ffffff; /* Example: change text color */
+  border-color: #67666600; /* Example: change border color */
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
 .customerDetails {
   background-color: #363636; /* Example: change background color */
   color: #ffffff; /* Example: change text color */
