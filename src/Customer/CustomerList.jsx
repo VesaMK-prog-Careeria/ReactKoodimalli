@@ -14,7 +14,7 @@ const [lisäystila, setLisäystila] = useState(false)
 const [muokkaustila, setMuokkaustila] = useState(false)
 const [reload, setReload] = useState(false)
 const [muokattavaCustomer, setMuokattavaCustomer] = useState(false)
-
+const [search, setSearch] = useState('')
 
 useEffect(() => { //tiedonhaku NW:n customers taulusta, useEffect hookilla haetaan tiedot kun sivu latautuu
   CustomerService.getAll()
@@ -23,6 +23,12 @@ useEffect(() => { //tiedonhaku NW:n customers taulusta, useEffect hookilla haeta
     })
 },[lisäystila, reload, muokkaustila] //jos lisäystila muuttuu niin hakee uudet tiedot
 )
+
+// Hakukentän onChange tapahtumkäsittelijä
+const handleSearch = (e) => {
+  setShowCustomers(true)
+  setSearch(e.target.value.toLowerCase())
+}
 
 const editCustomer = (customer) => {
     setMuokattavaCustomer(customer)
@@ -35,6 +41,8 @@ const editCustomer = (customer) => {
         <h2> 
               <button onClick={() => setShowCustomers(!showCustomers)}>
                 {!showCustomers ? 'Näytä asiakkaat' : 'Piilota asiakkaat'}</button>
+                {!lisäystila && !muokkaustila && 
+                  <input type='text' placeholder='Hae asiakasta' onChange={handleSearch} value={search} />}
               {!lisäystila && <button className='nappi' onClick={() => setLisäystila(true)}>Lisää asiakas</button>}
 
               {lisäystila && <CustomerAdd
@@ -49,9 +57,14 @@ const editCustomer = (customer) => {
               muokattavaCustomer={muokattavaCustomer}
               />} */}
         </h2>
-        {/* {!lisäystila && !muokkaustila && */showCustomers && customers && customers.map(c => ( // loopataan customers taulukko ja tulostetaan jokainen asiakas omalle rivilleen */}
-          <div key={c.customerId}>
-            <Customer 
+        {/* {!lisäystila && !muokkaustila && */showCustomers && customers && customers.map(c =>  // loopataan customers taulukko ja tulostetaan jokainen asiakas omalle rivilleen */}
+          {
+            const lowerCaseName = c.companyName.toLowerCase()
+            if (lowerCaseName.indexOf(search) > -1) {
+              return(
+          <div>
+            <Customer
+              key={c.customerId}
               customer={c} 
               setIsPositive={setIsPositive} 
               setMessage={setMessage} 
@@ -71,7 +84,11 @@ const editCustomer = (customer) => {
               />
             )}
           </div>
-        ))}
+          )
+          }
+        }
+        )
+        }
     </>
   )
 }
