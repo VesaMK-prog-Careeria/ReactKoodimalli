@@ -39,10 +39,8 @@ const editCustomer = (customer) => {
     <>
         {/*<h2 onClick={() => setShowCustomers(!showCustomers)}>Customers from NW</h2>*/}
         <h2> 
-              <button onClick={() => setShowCustomers(!showCustomers)}>
+              <button className='nappi' onClick={() => setShowCustomers(!showCustomers)}>
                 {!showCustomers ? 'Näytä asiakkaat' : 'Piilota asiakkaat'}</button>
-                {!lisäystila && !muokkaustila && 
-                  <input type='text' placeholder='Hae asiakasta' onChange={handleSearch} value={search} />}
               {!lisäystila && <button className='nappi' onClick={() => setLisäystila(true)}>Lisää asiakas</button>}
 
               {lisäystila && <CustomerAdd
@@ -57,6 +55,10 @@ const editCustomer = (customer) => {
               muokattavaCustomer={muokattavaCustomer}
               />} */}
         </h2>
+        {!lisäystila && !muokkaustila && 
+                  <input type='text' placeholder='Hae asiakasta' onChange={handleSearch} value={search} />}
+                  <br />
+                  <br />
         {/* {!lisäystila && !muokkaustila && */showCustomers && customers && customers.map(c =>  // loopataan customers taulukko ja tulostetaan jokainen asiakas omalle rivilleen */}
           {
             const lowerCaseName = c.companyName.toLowerCase()

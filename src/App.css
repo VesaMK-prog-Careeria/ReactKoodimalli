@@ -5,6 +5,11 @@
   text-align: center;
 }
 
+#userTable {
+  margin: 0 auto;
+  width: 80%;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
