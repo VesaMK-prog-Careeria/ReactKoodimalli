@@ -1,6 +1,7 @@
 import './App.css'
 import React, {useState, useEffect} from 'react'
 import UserService from './services/User'
+import UserAdd from './UserAdd'
 
 
 const UserList = ({setIsPositive, setShowMessage, setMessage}) => {
@@ -34,6 +35,12 @@ const editUsers = (user) => {
   return (
     <>
         <h2><nobr>Users from NW</nobr>
+
+            {lisäystila && <UserAdd 
+            setLisäystila={setLisäystila} 
+            setIsPositive={setIsPositive} 
+            setMessage={setMessage} 
+            setShowMessage={setShowMessage} />}
             <div>
             {!lisäystila && <button className='nappi' onClick={() => setLisäystila(true)}>Lisää käyttäjä</button>}
             </div>
@@ -42,7 +49,7 @@ const editUsers = (user) => {
             {!lisäystila && !muokkaustila && 
                   <input type='text' placeholder='Hae sukunimen perusteella' onChange={handleSearch} value={search} />
                   }
-
+                {!lisäystila && !muokkaustila &&
                   <table id='userTable'>
                     <thead>
                         <tr>
@@ -71,6 +78,7 @@ const editUsers = (user) => {
                     )}
                     </tbody>
                 </table>
+                }
     </>
     )
 }
