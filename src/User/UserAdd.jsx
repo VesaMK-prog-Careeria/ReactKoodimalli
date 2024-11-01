@@ -1,6 +1,6 @@
-import './App.css'
+import '../App.css'
 import React, {useState} from 'react'
-import UserService from './services/User'
+import UserService from '../services/User'
 import md5 from 'md5'
 
 const UserAdd = ({setLisäystila, setIsPositive, setMessage, setShowMessage, reload, setReload}) => {

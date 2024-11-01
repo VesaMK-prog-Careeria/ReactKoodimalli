@@ -19,7 +19,7 @@ const remove = id => {
 }
 
 const update = (object) => {
-    return axios.put(`${baseUrl}/${object.UserId}`, object)
+    return axios.put(`${baseUrl}/${object.userId}`, object)
 }
 
 export default { getAll, create, remove, update } // exportataan kaikki metodit
