@@ -40,7 +40,7 @@ const [newFax, setNewFax] = useState('')
 const handleSubmit = (event) => {
     event.preventDefault() //estetään lomakkeen lähettäminen
     var newCustomer = { //uusi asiakasobjekti
-        customerId: newCustomerId, // pitää olla samat nimet kuin tietokannassa
+        customerId: newCustomerId.toUpperCase(), // pitää olla samat nimet kuin tietokannassa
         companyName: newCompanyName,
         contactName: newContactName,
         contactTitle: newContactTitle,

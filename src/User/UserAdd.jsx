@@ -5,11 +5,11 @@ import md5 from 'md5'
 
 const UserAdd = ({setLisäystila, setIsPositive, setMessage, setShowMessage, reload, setReload}) => {
 
-
+// Komponentin tilan määritys jotka pitävät kirjaa käyttäjän input kenttien arvoista
 const [newFirstname, setNewFirstname] = useState('') //tämä kerää uuden käyttäjän tiedot joka painalluksella
 const [newLastname, setNewLastname] = useState('') //ja sitten kun painetaan submit nappia niin tiedot lähetetään tietokantaan
 const [newEmail, setNewEmail] = useState('') //ja tämä tyhjentää tilan
-const [newAccesslevelId, setNewAccesslevelId] = useState(2)
+const [newAccesslevelId, setNewAccesslevelId] = useState('')
 const [newUsername, setNewUsername] = useState('')
 const [newPassword, setNewPassword] = useState('')
 
@@ -22,7 +22,7 @@ const handleSubmit = (event) => {
         email: newEmail,
         accesslevelId: parseInt(newAccesslevelId),
         username: newUsername,
-        password: md5(newPassword) //md5 kirjaston salaus
+        password: md5(newPassword) //md5 kirjaston salaus, newPasswordin arvo salataan
     }
     console.log(newUser)
 
@@ -51,42 +51,42 @@ const handleSubmit = (event) => {
         setTimeout(() => { //3000ms jälkeen tyhjennetään tilat
             setShowMessage(false) //tämä piilottaa viestin
         },3000)
-    })
-
-    // setTimeout(() => { //500ms jälkeen tyhjennetään tilat
-    //     setLisäystila(false) //tämä sulkee lisäyslomakkeen
-    // },500)
-            
+    })          
 }
 
 return (
     <div id='addNew'>
             <h2>Käyttäjän lisäys</h2>
             <form onSubmit={handleSubmit}>
-                    <div>
+                    <div id='userAdd'>
                             <input type='text' value={newFirstname} onChange={({target}) => setNewFirstname(target.value)} 
                             placeholder='Etunimi' required/>
                     </div>
-                    <div>
+                    <div id='userAdd'>
                             <input type='text' value={newLastname} onChange={({target}) => setNewLastname(target.value)} 
                             placeholder='Sukunimi' required/>
                     </div>
-                    <div>
+                    <div id='userAdd'>
                             <input type='email' value={newEmail} onChange={({target}) => setNewEmail(target.value)} 
                             placeholder='Sähköposti'/>
                     </div>
-                    <div>
-                            <input type='number' value={newAccesslevelId} onChange={({target}) => setNewAccesslevelId(target.value)} 
-                            placeholder='Käyttö oikeus taso'/>
-                    </div>
-                    <div>
+                    <div id='userAdd'>
                             <input type='text' value={newUsername} onChange={({target}) => setNewUsername(target.value)} 
                             placeholder='Käyttäjätunnus'/>
                     </div>
-                    <div>
+                    <div id='userAdd'>
                             <input type='password' value={newPassword} onChange={({target}) => setNewPassword(target.value)} 
                             placeholder='Salasana'/>
                     </div>
+                    <div id='userAdd'>
+                            <select value={newAccesslevelId} onChange={({target}) => setNewAccesslevelId(target.value)}>
+                                <option value=''>Käyttöoikeustaso</option>
+                                <option value='1'>1</option>
+                                <option value='2'>2</option>
+                                <option value='3'>3</option>
+                            </select>
+                    </div>
+                    <br/>
                 <input type='submit' value='Talenna'/>
                 <input type='button' value='Peruuta' onClick={() => setLisäystila(false)}/>
             </form>

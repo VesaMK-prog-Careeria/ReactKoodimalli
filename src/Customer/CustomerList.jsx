@@ -39,15 +39,23 @@ const editCustomer = (customer) => {
     <>
         {/*<h2 onClick={() => setShowCustomers(!showCustomers)}>Customers from NW</h2>*/}
         <h2> 
-              <button className='nappi' onClick={() => setShowCustomers(!showCustomers)}>
-                {!showCustomers ? 'Näytä asiakkaat' : 'Piilota asiakkaat'}</button>
-              {!lisäystila && <button className='nappi' onClick={() => setLisäystila(true)}>Lisää asiakas</button>}
+              <button 
+                className='nappi' 
+                onClick={() => setShowCustomers(!showCustomers)}>
+                {!showCustomers ? 'Näytä asiakkaat' : 'Piilota asiakkaat'}
+              </button>
+
+              {!lisäystila && 
+                <button 
+                  className='nappi' 
+                  onClick={() => setLisäystila(true)}>Lisää asiakas
+                </button>}
 
               {lisäystila && <CustomerAdd
-              setLisäystila={setLisäystila}
-              setIsPositive={setIsPositive}
-              setMessage={setMessage}
-              setShowMessage={setShowMessage}
+                setLisäystila={setLisäystila}
+                setIsPositive={setIsPositive}
+                setMessage={setMessage}
+                setShowMessage={setShowMessage}
               />}
               {/* Tässä on muokkauslomake(ruudun yläreunassa), joka näkyy vain kun muokkaustilatila on true*/}
               {/* {muokkaustila && <CustomerEdit setMuokkaustila={setMuokkaustila}
@@ -55,11 +63,14 @@ const editCustomer = (customer) => {
               muokattavaCustomer={muokattavaCustomer}
               />} */}
         </h2>
-        {!lisäystila && !muokkaustila && 
-                  <input type='text' placeholder='Hae asiakasta' onChange={handleSearch} value={search} />}
+          {!lisäystila && !muokkaustila && 
+                  <input 
+                    type='text' 
+                    placeholder='Hae asiakasta' 
+                    onChange={handleSearch} value={search} />}
                   <br />
                   <br />
-        {/* {!lisäystila && !muokkaustila && */showCustomers && customers && customers.map(c =>  // loopataan customers taulukko ja tulostetaan jokainen asiakas omalle rivilleen */}
+        {showCustomers && customers && customers.map(c =>  // loopataan customers taulukko ja tulostetaan jokainen asiakas omalle rivilleen */}
           {
             const lowerCaseName = c.companyName.toLowerCase()
             if (lowerCaseName.indexOf(search) > -1) {

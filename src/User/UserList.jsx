@@ -4,10 +4,11 @@ import UserService from '../services/User'
 import UserAdd from './UserAdd'
 import UserEdit from './UserEdit'
 
-
+// function ja const ovat Reactin hookseja, const on uudempi tapa
 const UserList = ({setIsPositive, setShowMessage, setMessage}) => {
 
 // Komponentin tilan määritys
+// Statet aina ennen useEffectia
 const [users, setUsers] = useState([])
 const [lisäystila, setLisäystila] = useState(false)
 const [muokkaustila, setMuokkaustila] = useState(false)
@@ -63,7 +64,7 @@ const editUser = (user) => {
   return (
     <>
         <h2><nobr>Users from NW</nobr>
-        {muokkaustila && (
+        {muokkaustila && ( // UserEdit -komponentti näytetään, jos muokkaustila on true
             <UserEdit
                 setMuokkaustila={setMuokkaustila}
                 setIsPositive={setIsPositive}
@@ -74,17 +75,22 @@ const editUser = (user) => {
                 setReload={setReload}
             />
             )}
-            {lisäystila && <UserAdd 
-            setLisäystila={setLisäystila} 
-            setIsPositive={setIsPositive} 
-            setMessage={setMessage} 
-            setShowMessage={setShowMessage} />}
+            {lisäystila && // Lisää User -komponentti näytetään, jos lisäystila on true
+            <UserAdd 
+                setLisäystila={setLisäystila} 
+                setIsPositive={setIsPositive} 
+                setMessage={setMessage} 
+                setShowMessage={setShowMessage} />}
             <div>
-            {!lisäystila && <button className='nappi' onClick={() => setLisäystila(true)}>Lisää käyttäjä</button>}
+            {!lisäystila && !muokkaustila && // Piilotetaan Lisää User -nappi, jos lisäys- tai muokkaustila on päällä
+                <button 
+                    className='nappi' 
+                    onClick={() => setLisäystila(true)}>Lisää käyttäjä
+                </button>}
             </div>
             </h2>
 
-            {!lisäystila && !muokkaustila && 
+            {!lisäystila && !muokkaustila && // Piilotetaan hakukenttä, jos lisäys- tai muokkaustila on päällä
             <>
                   <input 
                   type='text' 
@@ -102,8 +108,8 @@ const editUser = (user) => {
                         </tr>
                     </thead>
                     <tbody>
-                    {users &&
-                        users.map((u) => {
+                    {users && // Taulukon generointi käyttäjätiedoista
+                        users.map((u) => { // Käydään käyttäjät läpi map-funktiolla
                         const lowerCaseName = u.lastName.toLowerCase();
                         if (lowerCaseName.indexOf(search) > -1) {
                             return (
