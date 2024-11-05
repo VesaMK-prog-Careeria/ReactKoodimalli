@@ -2,9 +2,13 @@ import axios from "axios"
 
 // koodi mikä hakee dataa json-serveriltä (back-endiltä)
 const baseUrl = "https://localhost:7265/api/Users"
+const loginUrl = "https://localhost:7265/api/authentication"
 
+const Login = (object) => { // Useampi parametri, jos tarvitaan (newCustomer, token)
+    const request = axios.post(loginUrl, object)
+    return request.then(response => response.data) // tässä haetaan vain data osa vastauksesta(response)
+}
 
-// getAl-metodin toteutus
 const getAll = () => {
     const request = axios.get(baseUrl)
     return request.then(response => response.data) // tässä haetaan vain data osa vastauksesta(response)
@@ -22,4 +26,4 @@ const update = (object) => {
     return axios.put(`${baseUrl}/${object.userId}`, object)
 }
 
-export default { getAll, create, remove, update } // exportataan kaikki metodit
+export default { getAll, create, remove, update, Login } // exportataan kaikki metodit

@@ -5,11 +5,12 @@ import Posts2 from './Posts2'
 import CustomerList from './Customer/CustomerList'
 import UserList from './User/UserList'
 import Viesti from './Viesti'
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Message from './Message'
 import { Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import Login from './Login'
 
 const App = () => {
 
@@ -21,6 +22,18 @@ const App = () => {
 const [showMessage, setShowMessage] = useState(false)
 const [message, setMessage] = useState('')
 const [isPositive, setIsPositive] = useState(false)
+const [loggedIn, setLoggedIn] = useState(false)
+
+useEffect(() => { //pysytään kirjautuneena vaikka sivu päivittyy
+  if(localStorage.getItem('username') !== null) {
+    setLoggedIn(true)
+  }
+}, [])
+// Logout metodi
+const logout = () => {
+  localStorage.clear()
+  setLoggedIn(false)
+}
 
 const huomio = () => {
   alert('Huomio!') // alertti joka tulostaa Huomio! kun sitä kutsutaan
@@ -39,6 +52,7 @@ const huomio = () => {
               <Nav.Link href="/posts2">Posts2</Nav.Link>
               <Nav.Link href="/users">Users</Nav.Link>
               <Nav.Link href="/laskuri">Laskuri</Nav.Link>
+              {loggedIn && <Nav.Link onClick={logout}>Logout</Nav.Link>}
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -46,7 +60,12 @@ const huomio = () => {
         <h1>React kurssi</h1>
         {/* kun lähetetään messagelle eli propsille viesti ja se on positiivinen niin se näytetään */}
         {showMessage && <Message message={message} isPositive={isPositive} />} {/* Message komponentti */}
-
+        {!loggedIn && <Login 
+          setIsPositive={setIsPositive} 
+          setMessage={setMessage} 
+          setShowMessage={setShowMessage}
+          setLoggedIn={setLoggedIn} />}
+        {loggedIn &&
         <Routes>
           <Route path="/customer" 
           element={<CustomerList 
@@ -76,6 +95,7 @@ const huomio = () => {
           </Route>
 
           </Routes>
+        }
       </Router>
     </div>
   )
