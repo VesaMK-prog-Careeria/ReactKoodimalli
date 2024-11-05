@@ -1,5 +1,5 @@
 import '../App.css'
-import React, {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import CustomerService from '../services/Customer'
 import Customer from './Customer'
 import CustomerAdd from './CustomerAdd'
@@ -19,21 +19,28 @@ const [search, setSearch] = useState('')
 useEffect(() => { //tiedonhaku NW:n customers taulusta, useEffect hookilla haetaan tiedot kun sivu latautuu
   const token = localStorage.getItem('token') //haetaan token localstoragesta
   if (token) { //jos token on olemassa niin
-  CustomerService.setToken(token) //lähetetään token CustomerServicelle
+    CustomerService.setToken(token); //lähetetään token CustomerServicelle
+  } else {
+    console.error('No token found')
+    setIsPositive(false)
+    setMessage('No token found')
+    setShowMessage(true)
+    return;
   }
   CustomerService.getAll()
     .then(customers => {
-        setCustomer(customers)
-        setShowCustomers(true)
+        setCustomer(customers);
+        setShowCustomers(true);
+
     })
     .catch(error => {
-      console.error('Error fetching customers', error)
-      setIsPositive(false)
-      setMessage('Error fetching customers')
-      setShowMessage(true)
-    })
+      console.error('Error fetching customers', error);
+      setIsPositive(false);
+      setMessage('Error fetching customers');
+      setShowMessage(true);
+    });
 },[lisäystila, reload, muokkaustila] //jos lisäystila muuttuu niin hakee uudet tiedot
-)
+);
 
 // Hakukentän onChange tapahtumkäsittelijä
 const handleSearch = (e) => {

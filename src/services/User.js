@@ -1,29 +1,59 @@
 import axios from "axios"
 
 // koodi mikä hakee dataa json-serveriltä (back-endiltä)
-const baseUrl = "https://localhost:7265/api/Users"
-const loginUrl = "https://localhost:7265/api/authentication"
+//const baseUrl = "https://localhost:7265/api/Users"
+//const loginUrl = "https://localhost:7265/api/authentication"
+const baseUrl = "https://nwrestapi.azurewebsites.net/api/Users"
+const loginUrl = "https://nwrestapi.azurewebsites.net/api/authentication"
 
-const Login = (object) => { // Useampi parametri, jos tarvitaan (newCustomer, token)
-    const request = axios.post(loginUrl, object)
-    return request.then(response => response.data) // tässä haetaan vain data osa vastauksesta(response)
+let token = null;
+/** Tämä on metodi jota kutsutaanaina ennen kuin tehdään muu pyyntö serviceen
+Parametrina annetaan token joka otetaan localstoragesta */
+const setToken = newToken => {
+    token = `bearer ${newToken}`
 }
+const Login = async (object) => {
+    const response = await axios.post(loginUrl, object)
+    const token = response.data.token
+    setToken(token)
+    localStorage.setItem('token', token);
+    return response.data
+}
+// const Login = (object) => { // Tämä metodi ei toimi, koska se ei palauta tokenia
+//     const request = axios.post(loginUrl, object)
+//     return request.then(response => response.data)
+// }
 
+// getAll-metodin toteutus
 const getAll = () => {
-    const request = axios.get(baseUrl)
-    return request.then(response => response.data) // tässä haetaan vain data osa vastauksesta(response)
-}                                                   // response sisältää myös status koodin ja muita tietoja
-
-const create = newUser => { // Useampi parametri, jos tarvitaan (newCustomer, token)
-    return axios.post(baseUrl, newUser)
+    const config = {
+        headers: { Authorization: token },
+    }
+    const request = axios.get(baseUrl, config)
+    return request.then(response => response.data)
 }
 
+// create-metodin toteutus
+const create = newUser => {
+    const config = {
+        headers: { Authorization: token },
+    };
+    return axios.post(baseUrl, newUser, config)
+}
+
+// remove-metodin toteutus
 const remove = id => {
-    return axios.delete(`${baseUrl}/${id}`) //backticksit koska halutaan muuttaa id muuttuja stringiksi
+    const config = {
+        headers: { Authorization: token },
+    }
+    return axios.delete(`${baseUrl}/${id}`, config)
 }
 
 const update = (object) => {
-    return axios.put(`${baseUrl}/${object.userId}`, object)
+    const config = {
+        headers: { Authorization: token },
+    }
+    return axios.put(`${baseUrl}/${object.userId}`, object, config)
 }
 
-export default { getAll, create, remove, update, Login } // exportataan kaikki metodit
+export default { getAll, create, remove, update, Login, setToken } // exportataan kaikki metodit

@@ -56,7 +56,8 @@ const huomio = () => {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-
+        <br />
+        <br />
         <h1>React kurssi</h1>
         {/* kun lähetetään messagelle eli propsille viesti ja se on positiivinen niin se näytetään */}
         {showMessage && <Message message={message} isPositive={isPositive} />} {/* Message komponentti */}
