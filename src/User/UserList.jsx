@@ -15,14 +15,37 @@ const [muokkaustila, setMuokkaustila] = useState(false)
 const [reload, setReload] = useState(false)
 const [muokattavaUser, setMuokattavaUser] = useState(false)
 const [search, setSearch] = useState('')
+const [accesslevelId, setAccesslevelId] = useState(0)
 
 useEffect(() => { //tiedonhaku NW:n users taulusta, useEffect hookilla haetaan tiedot kun sivu latautuu
-  UserService.getAll()
-    .then(data => {
-        setUsers(data)
-    })
-},[lisäystila, reload, muokkaustila] //jos lisäystila muuttuu niin hakee uudet tiedot
-)
+  const storedAccesslevelId = localStorage.getItem('accesslevelId')
+    if (storedAccesslevelId) {
+        setAccesslevelId(parseInt(storedAccesslevelId))
+    }
+}, [])
+
+useEffect(() => { //tiedonhaku NW:n users taulusta, useEffect hookilla haetaan tiedot kun sivu latautuu
+    // Piilotetaan UserList, jos käyttäjän accesslevelId ei ole 1
+    if (accesslevelId === 1) {
+        UserService.getAll()
+        .then(users => {
+            setUsers(users)
+        })
+        .catch(error => {
+            setIsPositive(false)
+            setMessage('Error fetching users')
+            setShowMessage(true)
+        })
+    }
+},[accesslevelId, lisäystila, reload, muokkaustila]) //jos lisäystila muuttuu niin hakee uudet tiedot
+
+if (accesslevelId !== 1) {
+    return (
+        <div>
+            <h2>Access denied</h2>
+        </div>
+    )
+}
 
 // Hakukentän onChange tapahtumkäsittelijä
 const handleSearch = (e) => {

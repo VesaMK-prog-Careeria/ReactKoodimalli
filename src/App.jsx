@@ -9,7 +9,7 @@ import React, {useEffect, useState} from 'react'
 import Message from './Message'
 import { Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import Login from './Login'
 
 const App = () => {
@@ -23,10 +23,16 @@ const [showMessage, setShowMessage] = useState(false)
 const [message, setMessage] = useState('')
 const [isPositive, setIsPositive] = useState(false)
 const [loggedIn, setLoggedIn] = useState(false)
+const [accesslevelId, setAccesslevelId] = useState(0)
 
 useEffect(() => { //pysytään kirjautuneena vaikka sivu päivittyy
-  if(localStorage.getItem('username') !== null) {
+  const username = localStorage.getItem('username')
+  if (username !== null) {
     setLoggedIn(true)
+  }
+  const storedAccesslevelId = localStorage.getItem('accesslevelId')
+  if (storedAccesslevelId) {
+    setAccesslevelId(parseInt(storedAccesslevelId))
   }
 }, [])
 // Logout metodi
@@ -74,14 +80,14 @@ const huomio = () => {
           setMessage={setMessage} 
           setShowMessage={setShowMessage} />}>
           </Route>
-
-          <Route path="/users"
-          element={<UserList 
-          setIsPositive={setIsPositive} 
-          setMessage={setMessage} 
-          setShowMessage={setShowMessage} />}>
-          </Route>
-
+          {accesslevelId === 1 && (
+            <Route path="/users"
+            element={<UserList 
+            setIsPositive={setIsPositive} 
+            setMessage={setMessage} 
+            setShowMessage={setShowMessage} />}>
+            </Route>
+          )}
           <Route path="/posts"
           element={<Posts info="Nämä ovat postauksia."
           tervehdys="Hello!"/>}>
@@ -94,7 +100,11 @@ const huomio = () => {
           <Route path="/laskuri"
           element={<Laskuri huomio={huomio} />}>
           </Route>
-
+          <Route 
+            path='/' 
+            element={loggedIn ? <Navigate 
+              to="/home" /> : <Navigate 
+              to="/login" />} />
           </Routes>
         }
       </Router>

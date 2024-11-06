@@ -1,5 +1,6 @@
 import './App.css'
 import React, {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 import UserService from './services/User'
 import md5 from 'md5'
 
@@ -7,15 +8,22 @@ const Login = ({setLoggedIn, setIsPositive, setMessage, setShowMessage, reload, 
 
 const [newUsername, setNewUsername] = useState('')
 const [newPassword, setNewPassword] = useState('')
+const [password2, setPassword2] = useState('')
 const [newAccesslevelId, setNewAccesslevelId] = useState('')
+const navigate = useNavigate()
 
 //onSubmit tapahtumankäsittelijä funktio
 const handleSubmit = (event) => {
     event.preventDefault() //estetään lomakkeen lähettäminen
+    if (newPassword !== password2) {
+        setMessage('Salasanat eivät täsmää') //tämä asettaa viestin
+        setShowMessage(true) //tämä näyttää viestin
+        setIsPositive(false) //tämä asettaa viestin negatiiviseksi
+        return;
+    }
     var user = { //uusi asiakasobjekti
         username: newUsername,
-        password: md5(newPassword), //md5 kirjaston salaus, newPasswordin arvo salataan
-
+        password: md5(newPassword) //md5 kirjaston salaus, newPasswordin arvo salataan
     }
     //console.log(user)
 
@@ -36,6 +44,7 @@ const handleSubmit = (event) => {
         localStorage.setItem('accesslevelId', response.accesslevelId) //tallennetaan accesslevelId localstorageen
         //localStorage.setItem('user', JSON.stringify(response.data)) //tallennetaan kaikenkattava käyttäjä localstorageen
         setLoggedIn(true) //muutetaan app komponentin tilaa
+        navigate('/home') //navigoidaan homeen
     })
     .catch(error => { //jos tulee virhe niin alerttiin tulee kirjautuminen ei onnistunut
         window.scrollTo(0, 0)
@@ -45,8 +54,9 @@ const handleSubmit = (event) => {
         setTimeout(() => { //3000ms jälkeen tyhjennetään tilat
             setShowMessage(false) //tämä piilottaa viestin
         },3000)
-    })          
+    })      
 }
+
 
 return (
     <div id='addNew'>
@@ -59,6 +69,10 @@ return (
                     <div id='userAdd'>
                             <input type='password' value={newPassword} onChange={({target}) => setNewPassword(target.value)} 
                             placeholder='Salasana'/>
+                    </div>
+                    <div id='userAdd'>
+                            <input type='password' value={password2} onChange={({target}) => setPassword2(target.value)} 
+                            placeholder='Salasana uudelleen'/>
                     </div>
                     <br/>
                 <input type='submit' value='Kirjaudu'/>
