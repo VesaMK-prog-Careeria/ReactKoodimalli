@@ -12,10 +12,26 @@ const [newEmail, setNewEmail] = useState('') //ja tämä tyhjentää tilan
 const [newAccesslevelId, setNewAccesslevelId] = useState('')
 const [newUsername, setNewUsername] = useState('')
 const [newPassword, setNewPassword] = useState('')
+const [password2, setPassword2] = useState('')
+const [errorMessage, setErrorMessage] = useState('') //tämä on virheviesti joka tulee jos salasanat eivät täsmää
 
+const handlePassword2Change = (event) => {
+    const { value } = event.target
+    setPassword2(value)
+    if (newPassword !== value) {
+        setErrorMessage('Salasanat eivät täsmää')
+    }
+    else {
+        setErrorMessage('')
+    }
+}
 //onSubmit tapahtumankäsittelijä funktio
 const handleSubmit = (event) => {
     event.preventDefault() //estetään lomakkeen lähettäminen
+    if (newPassword !== password2) {
+        setErrorMessage('Salasanat eivät täsmää') //tämä asettaa viestin
+        return
+    }
     var newUser = { //uusi asiakasobjekti
         firstname: newFirstname,
         lastname: newLastname,
@@ -79,6 +95,9 @@ return (
                             placeholder='Salasana'/>
                     </div>
                     <div id='userAdd'>
+                        <input type='password' value={password2} onChange={handlePassword2Change} placeholder='Salasana uudelleen' />
+                    </div>
+                    <div id='userAdd'>
                             <select value={newAccesslevelId} onChange={({target}) => setNewAccesslevelId(target.value)}>
                                 <option value=''>Käyttöoikeustaso</option>
                                 <option value='1'>1</option>
@@ -86,6 +105,7 @@ return (
                                 <option value='3'>3</option>
                             </select>
                     </div>
+                    {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
                     <br/>
                 <input type='submit' value='Talenna'/>
                 <input type='button' value='Peruuta' onClick={() => setLisäystila(false)}/>
