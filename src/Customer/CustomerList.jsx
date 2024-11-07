@@ -55,7 +55,6 @@ const editCustomer = (customer) => {
 
   return (
     <>
-        {/*<h2 onClick={() => setShowCustomers(!showCustomers)}>Customers from NW</h2>*/}
         <h2> 
               <button 
                 className='nappi' 
@@ -75,11 +74,6 @@ const editCustomer = (customer) => {
                 setMessage={setMessage}
                 setShowMessage={setShowMessage}
               />}
-              {/* Tässä on muokkauslomake(ruudun yläreunassa), joka näkyy vain kun muokkaustilatila on true*/}
-              {/* {muokkaustila && <CustomerEdit setMuokkaustila={setMuokkaustila}
-              setIsPositive={setIsPositive} setMessage={setMessage} setShowMessage={setShowMessage}
-              muokattavaCustomer={muokattavaCustomer}
-              />} */}
         </h2>
           {!lisäystila && !muokkaustila && 
                   <input 

@@ -4,6 +4,7 @@ import Posts from './Posts'
 import Posts2 from './Posts2'
 import CustomerList from './Customer/CustomerList'
 import UserList from './User/UserList'
+import ProductList from './Product/ProductList'
 import Viesti from './Viesti'
 import React, {useEffect, useState} from 'react'
 import Message from './Message'
@@ -54,6 +55,7 @@ const huomio = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
               <Nav.Link href="/customer">Customers</Nav.Link>
+              <Nav.Link href="/product">Products</Nav.Link>
               <Nav.Link href="/posts">Posts</Nav.Link>
               <Nav.Link href="/posts2">Posts2</Nav.Link>
               <Nav.Link href="/users">Users</Nav.Link>
@@ -78,6 +80,12 @@ const huomio = () => {
           element={<CustomerList 
           setIsPositive={setIsPositive} 
           setMessage={setMessage} 
+          setShowMessage={setShowMessage} />}>
+          </Route>
+          <Route path="/product"
+          element={<ProductList
+          setIsPositive={setIsPositive}
+          setMessage={setMessage}
           setShowMessage={setShowMessage} />}>
           </Route>
           {accesslevelId === 1 && (
