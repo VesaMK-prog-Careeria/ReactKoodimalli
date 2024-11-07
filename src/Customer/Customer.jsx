@@ -35,7 +35,7 @@ const Customer = ({ customer, editCustomer, setIsPositive, setMessage, setShowMe
         if (isVisible) {
           customerElement.style.borderBottomRightRadius = '20px'
           customerElement.style.borderBottomLeftRadius = '20px'
-          customerElement.style.backgroundColor = 'lightblue'
+          customerElement.style.backgroundColor = 'grey'
           customerElement.style.color = 'black'
         } else {
           customerElement.style.borderBottomRightRadius = ''
@@ -118,8 +118,8 @@ const Customer = ({ customer, editCustomer, setIsPositive, setMessage, setShowMe
             </tbody>
           </table>
           <div style={{ textAlign: 'center' }}>
-            <button onClick={() => deleteCustomer(customer)}>Delete</button>
-            <button onClick={() => editCustomer(customer)}>Edit</button>
+            <button id='custBtn' onClick={() => deleteCustomer(customer)}>Delete</button>
+            <button id='custBtn' onClick={() => editCustomer(customer)}>Edit</button>
           </div>
         </div>
       )}

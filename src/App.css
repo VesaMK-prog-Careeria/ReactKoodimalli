@@ -71,6 +71,7 @@
 }
 
 .customerDiv {
+  width: 40rem;
   background-color: #363636; /* Example: change background color */
   color: #ffffff; /* Example: change text color */
   border-color: #67666600; /* Example: change border color */
@@ -92,6 +93,17 @@
 
 .nappi {
   background-color: #363636; /* Example: change background color */
+  font-size: medium;
+  color: #ffffff; /* Example: change text color */
+  border-color: #67666600; /* Example: change border color */
+  border-radius: 10px;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+#custBtn {
+  background-color: #666565; /* Example: change background color */
+  font-size: medium;
   color: #ffffff; /* Example: change text color */
   border-color: #67666600; /* Example: change border color */
   border-radius: 10px;
@@ -127,7 +139,3 @@ th, td {
   padding: 8px;
   text-align: left;
 }
-
-/* tr:nth-child(even) {
-  background-color: #f2f2f2;
-} */

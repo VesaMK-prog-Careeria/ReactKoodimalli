@@ -1,8 +1,8 @@
 import '../App.css'
 import React, {useState, useEffect} from 'react'
 import ProductService from '../services/Product'
-//import UserAdd from './UserAdd'
-//import UserEdit from './UserEdit'
+import ProductAdd from './ProductAdd'
+import ProductEdit from './ProductEdit'
 
 // function ja const ovat Reactin hookseja, const on uudempi tapa
 const ProductList = ({setIsPositive, setShowMessage, setMessage}) => {
