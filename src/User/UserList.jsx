@@ -25,7 +25,7 @@ useEffect(() => { //tiedonhaku NW:n users taulusta, useEffect hookilla haetaan t
 }, [])
 
 useEffect(() => { //tiedonhaku NW:n users taulusta, useEffect hookilla haetaan tiedot kun sivu latautuu
-    // Piilotetaan UserList, jos käyttäjän accesslevelId ei ole 1 ja jos ei niin näytetään viesti access denied
+    // Piilotetaan UserList, jos käyttäjän accesslevelId ei ole 1
     if (accesslevelId === 1) {
         UserService.getAll()
         .then(users => {

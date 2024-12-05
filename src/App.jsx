@@ -25,6 +25,7 @@ const [message, setMessage] = useState('')
 const [isPositive, setIsPositive] = useState(false)
 const [loggedIn, setLoggedIn] = useState(false)
 const [accesslevelId, setAccesslevelId] = useState(0)
+const [refresh, setRefresh] = useState(false)
 
 useEffect(() => { //pysytään kirjautuneena vaikka sivu päivittyy
   const username = localStorage.getItem('username')
@@ -35,7 +36,8 @@ useEffect(() => { //pysytään kirjautuneena vaikka sivu päivittyy
   if (storedAccesslevelId) {
     setAccesslevelId(parseInt(storedAccesslevelId))
   }
-}, [])
+  setRefresh(prev => !prev);
+}, [loggedIn])
 // Logout metodi
 const logout = () => {
   localStorage.clear()
@@ -58,7 +60,7 @@ const huomio = () => {
               <Nav.Link href="/product">Products</Nav.Link>
               <Nav.Link href="/posts">Posts</Nav.Link>
               <Nav.Link href="/posts2">Posts2</Nav.Link>
-              <Nav.Link href="/users">Users</Nav.Link>
+              {accesslevelId === 1 && <Nav.Link href="/users">Users</Nav.Link>}
               <Nav.Link href="/laskuri">Laskuri</Nav.Link>
               {loggedIn && <Nav.Link onClick={logout}>Logout</Nav.Link>}
             </Nav>
