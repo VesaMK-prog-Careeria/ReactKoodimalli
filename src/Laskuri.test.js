@@ -1,12 +1,12 @@
-import React from 'react'; // Tämä lisätään
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Laskuri from './Laskuri';
 
-describe('Laskuri component', () => {
+describe('Laskuri komponentti', () => {
   it('Aloitus numero on 0', () => {
     render(<Laskuri huomio={jest.fn()} />); // Huomio on tyhjä funktio joka ei tee mitään mutta se pitää antaa jotta testi menee läpi
-    expect(screen.getByText('0')).toBeInTheDocument(); // Tämä lisätään jotta testi menee läpi
+    expect(screen.getByText('0')).toBeInTheDocument();
   });
 
   it('lisätään numero kun "+" klikattu', () => { 

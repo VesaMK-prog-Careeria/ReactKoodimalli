@@ -5,7 +5,7 @@ import CustomerService from '../services/Customer';
 import '@testing-library/jest-dom'; // Tämä lisätään
 global.scrollTo = jest.fn(); // Mockataan window.scrollTo
 
-// Mockataan CustomerService.create. Tämä mockaus on tarpeen, koska emme halua tehdä oikeaa HTTP-pyyntöä testin aikana.
+// Mockataan CustomerService.create. Tämä mockaus on tarpeen, ei tehdä oikeaa HTTP-pyyntöä testin aikana.
 jest.mock('../services/Customer', () => ({
     create: jest.fn(() => Promise.resolve({ status: 200 })), // Palauttaa onnistuneen vastauksen
   }));  
@@ -23,7 +23,7 @@ describe('CustomerAdd Component', () => { // Tässä määritellään testiryhm�
       setReload: jest.fn(),
     };
   });
-
+// Tässä määritellään testitapaukset
   it('formi renderöidään onnistuneesti', () => {
     render(<CustomerAdd {...mockProps} />);
     expect(screen.getByText(/Asiakkaan lisäys/i)).toBeInTheDocument();

@@ -1,8 +1,8 @@
 import axios from "axios"
 
 // koodi mikä hakee dataa json-serveriltä (back-endiltä)
-const baseUrl = "https://localhost:7265/api/products"
-//const baseUrl = "https://nwrestapi.azurewebsites.net/api/products"
+//const baseUrl = "https://localhost:7265/api/products"
+const baseUrl = "https://nwrestapi.azurewebsites.net/api/products"
 
 let token = null;
 /** Tämä on metodi jota kutsutaanaina ennen kuin tehdään muu pyyntö serviceen

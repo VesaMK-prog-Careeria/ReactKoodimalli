@@ -10,6 +10,7 @@
 //
 //
 // -- This is a parent command --
+// Tämä suorittaa kirjautumisen sovellukseen
 Cypress.Commands.add('login', (username, password) => {
     cy.visit('http://localhost:5173');
     cy.get('input[placeholder="Käyttäjätunnus"]').type(username);

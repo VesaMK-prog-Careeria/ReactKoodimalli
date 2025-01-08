@@ -1,20 +1,20 @@
 describe('Product komponentti', function () {
   beforeEach(() => {
-    cy.login('Teppo', 'Testaaja'); // Kirjautumistoiminnallisuus
+    cy.login('Teppo', 'Testaaja'); // Kirjautumistoiminnallisuus löytyy commands.js-tiedostosta
   });
 
-  it('renders the product form correctly', function () {
+  it('renderöi formin oikein', function () {
     cy.visit('http://localhost:5173/product'); // Käy tuotteen lisäyssivulla
     cy.get('h2').should('contain', 'Lisää tuote'); // Varmista, että lomake näkyy
   });
 
-  it('Lisää tuote', function () {
+  it('Lisää tuote ja poista', function () {
     // Siirrytään tuotteen lisäyssivulle
     cy.visit('http://localhost:5173/product');
     cy.get('h2').should('contain', 'Lisää tuote').click();
 
     // Syötetään lomakkeeseen tietoja
-    cy.get('input[placeholder="Tuotteen nimi"]').type('Testituote');
+    cy.get('input[placeholder="Tuotteen nimi"]').type('Testituote'); //haetaan input-kenttä, jolla on placeholder-arvo "Tuotteen nimi" ja kirjoitetaan siihen "Testituote"
     cy.get('input[placeholder="Toimittajan ID"]').type('1');
     cy.get('input[placeholder="Kategorian ID"]').type('2');
     cy.get('input[placeholder="Määrä per yksikkö"]').type('10 kpl');

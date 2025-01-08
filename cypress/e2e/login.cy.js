@@ -1,9 +1,9 @@
 describe('Login functionality', () => {
   beforeEach(() => {
     // Navigoi Login-sivulle
-    cy.visit('http://localhost:5173'); // Muuta tämä sovelluksen reitityksen mukaiseksi
+    cy.visit('http://localhost:5173');
   });
-
+// Testaa, että lomake renderöidään oikein
   it('renders the login form correctly', () => {
     cy.get('h2').should('contain', 'Login');
     cy.get('input[placeholder="Käyttäjätunnus"]').should('exist');
@@ -11,7 +11,7 @@ describe('Login functionality', () => {
     cy.get('input[placeholder="Salasana uudelleen"]').should('exist');
     cy.get('input[type="submit"]').should('have.value', 'Kirjaudu');
   });
-
+// Testaa, että käyttäjä voi kirjautua sisään
   it('shows error message if passwords do not match', () => {
     cy.get('input[placeholder="Käyttäjätunnus"]').type('Teppo');
     cy.get('input[placeholder="Salasana"]').type('Testaaja');
